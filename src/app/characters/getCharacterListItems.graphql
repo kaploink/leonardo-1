@@ -1,0 +1,17 @@
+query GetCharacterListItems($page: Int) {
+  characters(page: $page) {
+    info {
+      next
+      prev
+    }
+    results {
+      id
+      name
+      image
+      species
+      location {
+        name
+      }
+    }
+  }
+}

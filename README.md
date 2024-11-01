@@ -1,3 +1,31 @@
+## Key decisions
+
+### Next 14 and React 18, instead of Next 15 and React 19 RC
+
+Next has marked Next 15 as stable, but it depends on React 19 which is still marked as a release candidate (not officially considered stable enough for production).
+
+Next 15 is primarily intended to work with React 19 so using Next 15 with React 18 is likely to be a bit unstable.
+
+As such, downgrading to next@14 and react@18, with the intention that the project would be upgraded once React 19 is out of RC.
+
+### Include zod
+
+Judging that the extra robustness justifies breaking the preference for few dependencies
+
+### Forms
+
+Given the simplicity of the form and preference for few dependencies, I'm skipping using a form library such as conform or react-hook-form and corresponding schema defined with zod.
+
+### Dark mode
+
+Skipping doing it properly to reduce scope; it's dark only and not using chakra and tailwind's darkmode functionality
+
+### Testing
+
+Skipping to reduce scope and given there aren't any complex logic functions.  Generally would aim for near full coverage of logic and components, using vitest (or jest) and react-testing-library.  Would also add a small number of cypress e2e tests for sanity checking of key flows.
+
+## Next.js Intro
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
