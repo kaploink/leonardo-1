@@ -208,7 +208,7 @@ export type GetCharacterDetailQueryVariables = Exact<{
 }>;
 
 
-export type GetCharacterDetailQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, name?: string | null, image?: string | null, species?: string | null, status?: string | null } | null };
+export type GetCharacterDetailQuery = { __typename?: 'Query', character?: { __typename?: 'Character', gender?: string | null, id?: string | null, image?: string | null, name?: string | null, species?: string | null, status?: string | null, type?: string | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null, origin?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null };
 
 export type GetCharacterListItemsQueryVariables = Exact<{
   page?: InputMaybe<Scalars['Int']['input']>;
@@ -221,11 +221,25 @@ export type GetCharacterListItemsQuery = { __typename?: 'Query', characters?: { 
 export const GetCharacterDetailDocument = gql`
     query GetCharacterDetail($id: ID!) {
   character(id: $id) {
+    gender
     id
-    name
     image
+    location {
+      id
+      name
+      type
+      dimension
+    }
+    name
+    origin {
+      id
+      name
+      type
+      dimension
+    }
     species
     status
+    type
   }
 }
     `;

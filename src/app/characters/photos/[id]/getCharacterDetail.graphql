@@ -1,9 +1,0 @@
-query GetCharacterDetail($id: ID!) {
-  character(id: $id) {
-    id
-    name
-    image
-    species
-    status
-  }
-}

@@ -1,7 +1,7 @@
+import Providers from "@/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Providers from "@/providers";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -27,11 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} dark bg-slate-950 text-white antialiased`}
       >
-        {/* assuming this app won't need to access any other graphql servers; if in the future it does then:
-            - push this further down the route/component hierarchy, or
-            - import the relevant client directly from the routes and use client.query<>() (or via custom hook) */}
         <Providers>{children}</Providers>
       </body>
     </html>
