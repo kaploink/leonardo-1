@@ -3,7 +3,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 import { registerFormSchema } from "./schema";
 
 export async function registerAction(formData: FormData) {
@@ -18,9 +17,6 @@ export async function registerAction(formData: FormData) {
     // - in practice we may keep using client side ones until then instead
     return redirect("/register?error=invalid_form_data");
   }
-
-  if (parseResult.data.username === "error")
-    throw new Error("Simulated server error.");
 
   // Save the data in HTTP-only cookies to ensure security
   const cookieStore = cookies();

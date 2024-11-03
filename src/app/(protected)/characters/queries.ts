@@ -3,7 +3,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 import { registerFormSchema } from "../../register/schema";
 
 export const getRegistrationDataOrRedirect = async (): Promise<{
@@ -11,17 +10,15 @@ export const getRegistrationDataOrRedirect = async (): Promise<{
   jobTitle: string;
 }> => {
   const cookieStore = cookies();
-  // json parse cookie value
-  // const registerInfo = JSON.parse(cookieStore.get("registerInfo")?.value ?? "{}");
-
-  const blah = registerFormSchema.parse({ username: "matt", jobTitle: "Eng" });
 
   try {
     const data = JSON.parse(cookieStore.get("registerInfo")?.value ?? "{}");
     const parsed = registerFormSchema.parse(data);
 
     return parsed;
-  } catch (e) {
+    // eslintrc config not working for some reason
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_e) {
     redirect("/register");
   }
 };

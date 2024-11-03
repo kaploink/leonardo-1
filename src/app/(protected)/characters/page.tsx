@@ -1,17 +1,15 @@
-import { rickAndMortyApiClient } from "@/lib/apollo-clients";
-import { Box, Image, Text } from "@chakra-ui/react";
-import { cookies } from "next/headers";
-import { z } from "zod";
 import {
   GetCharacterListItemsQuery,
   GetCharacterListItemsQueryVariables,
 } from "@/graphql/generated";
-import GET_CHARACTER_LIST_ITEMS from "./getCharacterListItems.graphql";
+import { rickAndMortyApiClient } from "@/lib/apollo-clients";
+import { Image, Text } from "@chakra-ui/react";
+import { cookies } from "next/headers";
 import Link from "next/link";
-import { registerFormSchema } from "../../register/schema";
 import { redirect } from "next/navigation";
-import { getRegistrationDataOrRedirect } from "./queries";
-import titleImage from "./title.png";
+import { z } from "zod";
+import { registerFormSchema } from "../../register/schema";
+import GET_CHARACTER_LIST_ITEMS from "./getCharacterListItems.graphql";
 
 // todo: move to somewhere shared
 const numberParamSchema = z.string().transform((val) => parseInt(val, 10));
@@ -29,7 +27,9 @@ const getRegistrationData = async () => {
     return registerFormSchema.parse(
       JSON.parse(cookieStore.get("registerInfo")?.value ?? "{}"),
     );
-  } catch (e) {
+    // eslintrc config not working for some reason
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_e) {
     return redirect("/register");
   }
 };

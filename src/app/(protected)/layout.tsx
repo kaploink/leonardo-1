@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { RegisterFormData, registerFormSchema } from "../register/schema";
@@ -11,7 +10,9 @@ const requireRegistrationData = (): RegisterFormData => {
     return registerFormSchema.parse(
       JSON.parse(cookieStore.get("registerInfo")?.value ?? "{}"),
     );
-  } catch (e) {
+    // eslintrc config not working for some reason
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_e) {
     // incomplete registration data
 
     // don't bother to log an error; it's a pretty normal use case
@@ -30,5 +31,5 @@ export default function RootLayout({
   // - usually would be a shared func in a separate file but wasn't working.
   requireRegistrationData();
 
-  return <>{children}</>;
+  return children;
 }

@@ -22,41 +22,54 @@ Given the simplicity of the form and preference for few dependencies, I'm skippi
 
 Don't love this naming; in practice it's probably going to be a clearer cut case of sign-up/sign-in and profile
 
-### Scope cuts (to reduce time)
+### Server components
 
-#### Dark mode
+Using these by default, inline with the direct react is going in (RSC etc)
+
+### Store register info in cookie
+
+- Accessible from server components (local storage and session storage are not)
+- Supports multiple servers/lambdas/edges (shared and persisted)
+
+### List -> detail modal using parallel routes & intercepting routes
+
+- Meets detail navigation reqs with clean urls & mostly server components
+
+## Scope cuts / remaining todos
+
+### Dark mode
 
 Skipping doing it properly to reduce scope; it's dark only and not using chakra and tailwind's darkmode functionality
 
-#### Testing
+### Testing
 
 Skipping to reduce scope and given there aren't any complex logic functions.  Generally would aim for near full coverage of logic and components, using vitest (or jest) and react-testing-library.  Would also add a small number of cypress e2e tests for sanity checking of key flows.
 
-#### Chakra imports vs snippets
+### Chakra imports vs snippets
 
 Looks like Chakra is moving toward components living in your codebase like shadcn-ui's approach; agree with this but mostly just using direct imports for now to reduce scope.  Snippets added as a demonstation; skipping refactoring to customise and use consistently.
 
-#### Loading feedback
+### Loading feedback
 
 It's mostly all SSR so generally no client side loading states required.
 But there should be feedback on the buttons you click (button content change to spinner) and a global loader (bar along the top).
 Then tweak further as necessary, using Suspense and skeletons.
 
-#### Speed up the initial page loading times
+### Speed up the initial page loading times
 
 Idk why it's so slow; need to investigate
 
-#### Improve desktop design
+### Improve desktop design
 
 List on left; detail on right.  So can click through the list.  Wouldn't strictly meet the modal req though.
 
 Even if keep the current design the list shouldn't go full width on desktop, and make better use of the space.  Maybe bigger pics.  Maybe multi column grid of cards, but lack of linearity can make navigating them annoying, esp if detail on right.  Easier to visually search when names lined up too.
 
-#### Polish / cleanup
+### Polish / cleanup
 
 Refactor (component splits; less local customisation of styles); accessibility test & uplift; etc.
 
-#### Error handling
+### Error handling
 
 Currently is secure, but needs UX improved
 
@@ -88,6 +101,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## FAQ
+
+### Why are the parallel routes & intercepting routes not working...?
+
+Delete .next folder and rerun
 
 ## Learn More
 
