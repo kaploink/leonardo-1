@@ -1,4 +1,4 @@
-import { CharacterDetail } from "../../[id]/page";
+import { CharacterDetail } from "../../[id]/CharacterDetail";
 import Modal from "./modal";
 
 export const dynamicParams = true;
