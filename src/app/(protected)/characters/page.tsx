@@ -11,6 +11,7 @@ import Link from "next/link";
 import { registerFormSchema } from "../../register/schema";
 import { redirect } from "next/navigation";
 import { getRegistrationDataOrRedirect } from "./queries";
+import titleImage from "./title.png";
 
 // todo: move to somewhere shared
 const numberParamSchema = z.string().transform((val) => parseInt(val, 10));
@@ -42,12 +43,6 @@ export default async function InformationPage({
 
   console.log("characters page", { username, jobTitle });
 
-  // const [page, setPage] = useState(1);
-  // const { open, onOpen, onClose } = useDisclosure();
-  // const [selectedCharacter, setSelectedCharacter] = useState<
-  //   Character["id"] | undefined
-  // >();
-
   // parse at run time to sanitise untrusted inputs
   const { page } = searchParamsSchema.parse(
     // check type at compile time to pick up bugs (e.g. wrong prop names)
@@ -58,28 +53,30 @@ export default async function InformationPage({
     GetCharacterListItemsQuery,
     GetCharacterListItemsQueryVariables
   >({ query: GET_CHARACTER_LIST_ITEMS, variables: { page } });
-  // const { data, loading, error } = await rickAndMortyApiClient.query({
-  //   query: GET_CHARACTERS_2,
-  //   variables: { page },
-  // });
 
   if (error || !data?.characters?.results)
     return <Text>Error loading data</Text>;
 
-  // const openModal = (character: Character) => {
-  //   // setSelectedCharacter(character.id);
-  //   // onOpen();
-  // };
-
-  // return <div>hello from list</div>;
-
   return (
-    <div>
-      <h1 className="p-16 text-center text-5xl">Rick & Morty Characters</h1>
-      <Text fontSize="2xl">Welcome, {username}!</Text>
-      <Text>Job Title: {jobTitle}</Text>
+    <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 p-4">
+      <Link
+        href="/register"
+        className="inline-flex gap-2 self-end text-slate-400 hover:text-slate-200"
+      >
+        <span>{username}</span>
+        <span className="text-slate-600">|</span>
+        <span>{jobTitle}</span>
+      </Link>
 
-      <div className="flex flex-col">
+      {/* todo, should say "Characters" somewhere too; probably in the graphic, styled nicely */}
+      <Image
+        src="/rick-and-morty-logo.png"
+        alt="Rick and Morty logo"
+        width={300}
+        className="-mt-8"
+      />
+
+      <div className="flex w-full flex-col border-t border-slate-700">
         {data.characters.results.map((character) => {
           if (character === null) {
             throw new Error("Unsupported data model");
@@ -87,7 +84,7 @@ export default async function InformationPage({
 
           return (
             <Link
-              className="flex border-b border-slate-800 p-4 hover:bg-slate-800"
+              className="flex border-b border-slate-700 p-4 hover:bg-slate-900"
               key={character.id}
               href={`/characters/${character.id}`}
               passHref
@@ -101,38 +98,28 @@ export default async function InformationPage({
                 alt={character.name ?? undefined}
               />
               <div className="flex flex-col justify-center pl-4">
-                <div className="text-lg font-semibold text-white">
+                <div className="text-lg font-semibold text-slate-50">
                   {character.name}
                 </div>
-                <div className="text-slate-500">
+                <div className="text-slate-400">
                   {character.location?.name} • {character.species}
                 </div>
               </div>
-              {/* <GridItem
-                // onClick={() => openModal(character.id)}
-                cursor="pointer"
-              >
-                <Card.Root>
-                  <Card.Header>
-                    <Heading size="md">{character.name}</Heading>
-                  </Card.Header>
-                  <Card.Body>
-                    <Text>{character.name}</Text>
-                  </Card.Body>
-                </Card.Root>
-              </GridItem> */}
             </Link>
           );
         })}
       </div>
 
-      <div className="flex items-center justify-center py-8 text-xl">
+      <div className="flex items-center justify-center text-xl">
         {(page ?? 1) > 1 ? (
-          <a href="?page=1" className="p-4 text-slate-400 hover:text-slate-50">
+          <a
+            href={`?page=${data.characters.info?.prev}`}
+            className="p-4 text-slate-400 hover:text-slate-50"
+          >
             ❮
           </a>
         ) : (
-          <div className="p-4 text-slate-900">❮</div>
+          <div className="p-4 text-slate-800">❮</div>
         )}
         <div className="flex size-10 items-center justify-center rounded-full bg-slate-50 font-semibold text-slate-950">
           {page ?? 1}
@@ -145,34 +132,7 @@ export default async function InformationPage({
             ❯
           </a>
         )}
-
-        {/* <Button
-          // onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          isDisabled={!data.characters.info.prev}
-        >
-          Previous
-        </Button>
-        <Button
-          // onClick={() => setPage((prev) => prev + 1)}
-          isDisabled={!data.characters.info.next}
-        >
-          Next
-        </Button> */}
       </div>
-
-      {/* <Dialog isOpen={open} onClose={onClose}>
-        <DialogOverlay />
-        <DialogContent>
-          <DialogHeader>{selectedCharacter?.name}</DialogHeader>
-          <DialogCloseButton />
-          <DialogBody>
-            <Image
-              src={selectedCharacter?.image}
-              alt={selectedCharacter?.name}
-            />
-          </DialogBody>
-        </DialogContent>
-      </Dialog> */}
     </div>
   );
 }

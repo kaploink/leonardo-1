@@ -17,9 +17,18 @@ export const BreadcrumbRoot = forwardRef<HTMLDivElement, BreadcrumbRootProps>(
             const last = index === validChildren.length - 1;
             return (
               <Fragment key={index}>
-                <Breadcrumb.Item>{child}</Breadcrumb.Item>
+                {/* todo: customise it better
+                   - don't break light/dark mode
+                   - use a better hover feedback than underline
+                   - review size (too small?)
+                   */}
+                <Breadcrumb.Item className="text-slate-400 hover:text-slate-100">
+                  {child}
+                </Breadcrumb.Item>
                 {!last && (
-                  <Breadcrumb.Separator>{separator}</Breadcrumb.Separator>
+                  <Breadcrumb.Separator className="text-slate-400">
+                    {separator}
+                  </Breadcrumb.Separator>
                 )}
               </Fragment>
             );

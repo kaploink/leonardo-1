@@ -37,10 +37,10 @@ const DataListItem = ({
   return (
     <div
       key={label}
-      className="row-span-2 grid grid-cols-subgrid items-center gap-x-8 border-b border-b-slate-900 p-4 md:col-span-2"
+      className="row-span-2 grid grid-cols-subgrid items-center gap-x-8 border-b border-b-slate-800 p-4 md:col-span-2"
     >
-      <dt className="text-md font-semibold text-slate-600">{label}</dt>
-      <dd className="text-xl">{value ?? "-"}</dd>
+      <dt className="text-lg font-semibold text-slate-500">{label}</dt>
+      <dd className="text-xl">{value === "" ? "-" : (value ?? "-")}</dd>
     </div>
   );
 };
@@ -61,18 +61,20 @@ export async function CharacterDetail({ params }: { params: { id: string } }) {
     data.character;
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-16 p-4 text-slate-50">
+    <>
       <div className="flex flex-col items-center gap-8 p-4">
-        <Image
-          className="h-64 w-64 rounded-full"
-          // todo: remove optionality/nullability from type
-          // - set non-nullable in the graphql schema (with '!')
-          // - validate early if still not resolved
-          src={image ?? undefined}
-          alt={name ?? undefined}
-          width={256}
-          height={256}
-        />
+        {image && name && (
+          <Image
+            className="h-64 w-64 rounded-full"
+            // todo: remove optionality/nullability from type
+            // - set non-nullable in the graphql schema (with '!')
+            // - validate early if still not resolved
+            src={image}
+            alt={name}
+            width={256}
+            height={256}
+          />
+        )}
         <h1 className="text-center text-5xl font-semibold">{name}</h1>
       </div>
       <DataListRoot>
@@ -93,7 +95,7 @@ export async function CharacterDetail({ params }: { params: { id: string } }) {
             .join(" • ")}
         />
       </DataListRoot>
-    </div>
+    </>
   );
 }
 
@@ -103,12 +105,14 @@ export default async function CharacterDetailPage({
   params: { id: string };
 }) {
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-16 p-4 text-slate-50">
-      {/* todo: restyle the breadcrumb */}
-      <BreadcrumbRoot>
-        <BreadcrumbLink href="/characters">Characters</BreadcrumbLink>
-        <BreadcrumbCurrentLink>{params.id}</BreadcrumbCurrentLink>
-      </BreadcrumbRoot>{" "}
+    <div className="mx-auto flex max-w-5xl flex-col gap-16 text-slate-50">
+      <div className="flex-grow-0 p-4">
+        {/* todo: restyle the breadcrumb */}
+        <BreadcrumbRoot>
+          <BreadcrumbLink href="/characters">Characters</BreadcrumbLink>
+          <BreadcrumbCurrentLink>{params.id}</BreadcrumbCurrentLink>
+        </BreadcrumbRoot>{" "}
+      </div>
       <CharacterDetail params={params} />
     </div>
   );

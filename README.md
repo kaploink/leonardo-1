@@ -1,3 +1,5 @@
+# Leonardo.ai code test: Rick and Morty Characters
+
 ## Key decisions
 
 ### Next 14 and React 18, instead of Next 15 and React 19 RC
@@ -20,7 +22,7 @@ Given the simplicity of the form and preference for few dependencies, I'm skippi
 
 Don't love this naming; in practice it's probably going to be a clearer cut case of sign-up/sign-in and profile
 
-### Scope cuts (not enough time)
+### Scope cuts (to reduce time)
 
 #### Dark mode
 
@@ -49,6 +51,19 @@ Idk why it's so slow; need to investigate
 List on left; detail on right.  So can click through the list.  Wouldn't strictly meet the modal req though.
 
 Even if keep the current design the list shouldn't go full width on desktop, and make better use of the space.  Maybe bigger pics.  Maybe multi column grid of cards, but lack of linearity can make navigating them annoying, esp if detail on right.  Easier to visually search when names lined up too.
+
+#### Polish / cleanup
+
+Refactor (component splits; less local customisation of styles); accessibility test & uplift; etc.
+
+#### Error handling
+
+Currently is secure, but needs UX improved
+
+- custom-styled field errors
+- field-specific errors from server displayed against fields
+- global errors from server or network displayed between fields and button
+- etc
 
 ## Next.js Intro
 
