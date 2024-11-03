@@ -20,8 +20,6 @@ const searchParamsSchema = z.object({
 
 const getRegistrationData = async () => {
   const cookieStore = cookies();
-  // json parse cookie value
-  // const registerInfo = JSON.parse(cookieStore.get("registerInfo")?.value ?? "{}");
 
   try {
     return registerFormSchema.parse(
@@ -40,8 +38,6 @@ export default async function InformationPage({
   searchParams: { page?: string };
 }) {
   const { username, jobTitle } = await getRegistrationData();
-
-  console.log("characters page", { username, jobTitle });
 
   // parse at run time to sanitise untrusted inputs
   const { page } = searchParamsSchema.parse(

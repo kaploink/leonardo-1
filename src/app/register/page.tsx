@@ -29,13 +29,13 @@ export default function Register({
   const error = searchParams?.error; // Use error from server response if it exists
 
   return (
-    <div>
+    <div className="flex h-screen flex-col items-center justify-center">
       <form
         action={registerAction}
-        className="mx-auto flex max-w-2xl flex-col items-start gap-4 p-8"
+        className="flex w-full max-w-xl flex-col gap-4 p-8"
       >
         <div>
-          <h1 className="text-2xl text-slate-200">{`${username ? "Edit" : "Please enter"} your details`}</h1>
+          <h1 className="text-2xl font-semibold text-slate-200">{`${username ? "Edit" : "Please enter"} your details`}</h1>
         </div>
         <Field label="Username" className="font-semibold text-slate-400">
           <Input
